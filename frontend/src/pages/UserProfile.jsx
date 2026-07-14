@@ -25,7 +25,7 @@ export default function UserProfile() {
 
       try {
         // Fetch user profile
-        const userResponse = await fetch('http://localhost:5000/api/auth/profile', {
+        const userResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/profile`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -46,7 +46,7 @@ export default function UserProfile() {
         setEditedUser(userData);
 
         // Fetch bookings
-        const bookingsResponse = await fetch('http://localhost:5000/api/bookings/my-bookings', {
+        const bookingsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/my-bookings`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -59,7 +59,7 @@ export default function UserProfile() {
         }
 
         // Fetch user reviews
-        const reviewsResponse = await fetch('http://localhost:5000/api/reviews/user/my-reviews', {
+        const reviewsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/user/my-reviews`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -102,7 +102,7 @@ export default function UserProfile() {
   const handleSave = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:5000/api/auth/profile', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/profile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

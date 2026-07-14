@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await fetch('http://localhost:5000/places');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/places`);
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
         const enhancedData = data.map((place) => ({

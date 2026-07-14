@@ -23,7 +23,7 @@ export default function AdminDashboard() {
      
       try {
         // Fetch bookings
-        const bookingsResponse = await fetch('http://localhost:5000/api/bookings', {
+        const bookingsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
         }
 
         // Fetch destinations
-        const destinationsResponse = await fetch('http://localhost:5000/places', {
+        const destinationsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/places`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
         }
 
         // Fetch users
-        const usersResponse = await fetch('http://localhost:5000/api/auth/users', {
+        const usersResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/users`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/places', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/places`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

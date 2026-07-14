@@ -25,7 +25,7 @@ export default function ProtectedRoute({ children, requiredRole = null }) {
 
       // If role is required, verify with backend
       try {
-        const response = await fetch('http://localhost:5000/api/auth/profile', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/profile`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'x-auth-token': token

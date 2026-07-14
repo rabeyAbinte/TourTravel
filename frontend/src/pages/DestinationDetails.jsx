@@ -41,7 +41,7 @@ export default function DestinationDetails() {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await fetch('http://localhost:5000/places');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/places`);
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
         
@@ -216,7 +216,7 @@ export default function DestinationDetails() {
     const days = calculateDays();
     const totalPrice = destination.price * days * guests;
     try {
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -258,7 +258,7 @@ export default function DestinationDetails() {
     setReviewSubmitting(true);
     setReviewMsg('');
     try {
-      const response = await fetch('http://localhost:5000/api/reviews', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
