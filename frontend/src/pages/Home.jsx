@@ -1,130 +1,173 @@
-import React from 'react';
-import { Search, MapPin, Star, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const DESTINATIONS = [
-  {
-    id: 1,
-    title: 'Santorini',
-    location: 'Greece',
-    rating: 4.9,
-    reviews: 1240,
-    price: 120,
-    image: 'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 2,
-    title: 'Bali',
-    location: 'Indonesia',
-    rating: 4.8,
-    reviews: 843,
-    price: 85,
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 3,
-    title: 'Machu Picchu',
-    location: 'Peru',
-    rating: 4.9,
-    reviews: 3200,
-    price: 150,
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 4,
-    title: 'Kyoto',
-    location: 'Japan',
-    rating: 4.7,
-    reviews: 560,
-    price: 110,
-    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 5,
-    title: 'Amalfi Coast',
-    location: 'Italy',
-    rating: 4.9,
-    reviews: 890,
-    price: 180,
-    image: 'https://images.unsplash.com/photo-1611003228941-98852ba62227?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 6,
-    title: 'Banff National Park',
-    location: 'Canada',
-    rating: 4.8,
-    reviews: 420,
-    price: 95,
-    image: 'https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  }
-];
+import React, { useState, useEffect } from 'react';
+import { Sparkles, Compass, ShieldCheck, Award, Users, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import DestinationCard from '../components/DestinationCard'; 
 
 export default function Home() {
-  return (
-    <div className="animate-fade-in">
-      <section className="hero">
-        <div className="container">
-          <div className="hero-content">
-            <h1 className="hero-title">Discover Your Next <span className="text-gradient">Great Adventure</span></h1>
-            <p className="hero-subtitle">
-              Explore the world's most breathtaking destinations. Plan your itinerary, book your stay, and create unforgettable memories.
-            </p>
+  const [destinations, setDestinations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('all');
 
-            <div className="search-box">
-              <div className="search-input-wrapper">
-                <MapPin size={24} color="var(--primary)" />
-                <input type="text" placeholder="Where do you want to go?" />
-              </div>
-              <button className="btn btn-primary" style={{ padding: '16px 32px' }}>
-                <Search size={20} />
-                Search
-              </button>
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/places');
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
+        const enhancedData = data.map((place) => ({
+          ...place,
+          title: place.name,
+          id: place._id
+        }));
+        setDestinations(enhancedData);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching places:', err);
+        setLoading(false);
+      }
+    };
+
+    fetchPlaces();
+  }, []);
+
+  const getFilteredDestinations = () => {
+    if (activeCategory === 'all') return destinations;
+    if (activeCategory === 'coastal') {
+      return destinations.filter(d => 
+        d.title.toLowerCase().includes('cox') || 
+        d.title.toLowerCase().includes('martin')
+      );
+    }
+    if (activeCategory === 'hilly') {
+      return destinations.filter(d => 
+        d.title.toLowerCase().includes('sajek') || 
+        d.title.toLowerCase().includes('bandarban')
+      );
+    }
+    if (activeCategory === 'forest') {
+      return destinations.filter(d => 
+        d.title.toLowerCase().includes('sylhet') ||
+        d.title.toLowerCase().includes('sundar')
+      );
+    }
+    return destinations;
+  };
+
+  const filteredPlaces = getFilteredDestinations();
+
+  return (
+    <div className="animate-fade-in dashboard-page">
+      {/* ১. ফিক্সড হিরো সেকশন (Dynamic Background & Contrast Overlay) */}
+      <section 
+        className="relative bg-cover bg-center bg-no-repeat py-24 md:py-36 min-h-[500px] flex items-center"
+        style={{ backgroundImage: `url('/images/homebackground.jpg')` }}
+      >
+        {/* ডার্ক গ্রেডিয়েন্ট ওভারলে যা টেক্সট ফুটিয়ে তুলবে */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent"></div>
+
+        <div className="container relative z-10 px-6 mx-auto">
+          <div className="max-w-2xl text-white">
+            <div className="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-md border border-teal-500/30 text-teal-300 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+              <Sparkles size={16} /> <span>Your Ultimate Bangladesh Travel Partner</span>
             </div>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+              Explore Breathtaking <span className="text-teal-400">Bangladesh</span>
+            </h1>
+            <p className="text-lg md:text-xl text-neutral-200 leading-relaxed mb-8">
+              From the world's longest sandy beach in Cox's Bazar to the misty tea gardens of Sylhet. Discover natural wonders and book your dream escape.
+            </p>
+            
+
           </div>
         </div>
       </section>
 
-      <section className="section container">
-        <div className="section-header">
-          <div>
-            <h2 className="section-title">Popular Destinations</h2>
-            <p className="section-subtitle">Handpicked locations for your next journey</p>
+      {/* ২. ফিক্সড কমার্শিয়াল হাইলাইটস (Center-Aligned Icons & Balanced Spacing) */}
+      <section className="section container py-16 mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div className="bg-white p-10 rounded-3xl border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6 shadow-sm">
+              <ShieldCheck size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-neutral-900 mb-3">Verified Reservations</h3>
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">Instant booking confirmations with guaranteed hotel & tour guide access.</p>
           </div>
-          <Link to="/destinations" className="btn btn-secondary">
-            View All <ChevronRight size={20} />
-          </Link>
+
+          <div className="bg-white p-10 rounded-3xl border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6 shadow-sm">
+              <Award size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-neutral-900 mb-3">Handpicked Spots</h3>
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">Curated natural wonders from Cox's Bazar to the hill tracts of Sajek.</p>
+          </div>
+
+          <div className="bg-white p-10 rounded-3xl border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-6 shadow-sm">
+              <Users size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-neutral-900 mb-3">24/7 Concierge</h3>
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">Dedicated support team to assist your itinerary and travel needs.</p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ৩. ডেস্টিনেশন সেকশন */}
+      <section className="section dashboard-destinations container mx-auto px-6 pb-16">
+        <div className="section-header-centered text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-3">Discover Featured <span className="text-teal-600">Destinations</span></h2>
+          <p className="text-neutral-500">Explore premium getaway packages across geographic regions</p>
         </div>
 
-        <div className="destinations-grid">
-          {DESTINATIONS.map(dest => (
-            <div key={dest.id} className="destination-card">
-              <div className="destination-image">
-                <img src={dest.image} alt={dest.title} className="destination-img" />
-                <div className="destination-rating shadow">
-                  <Star size={16} fill="var(--secondary)" color="var(--secondary)" />
-                  {dest.rating}
-                </div>
-              </div>
-              <div className="destination-content">
-                <h3 className="destination-title">
-                  {dest.title}
-                </h3>
-                <div className="destination-location">
-                  <MapPin size={16} />
-                  {dest.location}
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px' }}>
-                  <div className="destination-price">
-                    ${dest.price} <span>/ day</span>
-                  </div>
-                  <button className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-                    View Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+        {/* ক্যাটাগরি সুইচ */}
+        <div className="category-switcher-container flex flex-wrap justify-center gap-3 mb-10">
+          <button 
+            className={`category-tab px-5 py-2 rounded-full border border-neutral-200 transition-all ${activeCategory === 'all' ? 'bg-teal-600 text-white border-teal-600' : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'}`}
+            onClick={() => setActiveCategory('all')}
+          >
+            All Destinations
+          </button>
+          <button 
+            className={`category-tab px-5 py-2 rounded-full border border-neutral-200 transition-all ${activeCategory === 'coastal' ? 'bg-teal-600 text-white border-teal-600' : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'}`}
+            onClick={() => setActiveCategory('coastal')}
+          >
+            Coastal Beaches
+          </button>
+          <button 
+            className={`category-tab px-5 py-2 rounded-full border border-neutral-200 transition-all ${activeCategory === 'hilly' ? 'bg-teal-600 text-white border-teal-600' : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'}`}
+            onClick={() => setActiveCategory('hilly')}
+          >
+            Hills & Ridges
+          </button>
+          <button 
+            className={`category-tab px-5 py-2 rounded-full border border-neutral-200 transition-all ${activeCategory === 'forest' ? 'bg-teal-600 text-white border-teal-600' : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'}`}
+            onClick={() => setActiveCategory('forest')}
+          >
+            Tea Gardens & Forests
+          </button>
         </div>
+
+        {loading ? (
+          <div className="loading-spinner-container text-center py-10">
+            <div className="spinner mx-auto mb-4"></div>
+            <p className="text-neutral-400">Fetching beautiful spots...</p>
+          </div>
+        ) : filteredPlaces.length === 0 ? (
+          <div className="no-places-card text-center py-12 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
+            <Compass size={48} className="mx-auto text-neutral-400 mb-4" />
+            <h3 className="text-lg font-bold text-neutral-700">No matching places found</h3>
+            <p className="text-neutral-500 text-sm">We couldn't find destinations under this category. Check back soon!</p>
+          </div>
+        ) : (
+          <div className="destinations-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPlaces.map(dest => (
+              <DestinationCard key={dest.id} destination={dest} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

@@ -23,6 +23,8 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userRole', data.user?.role || 'user');
+        localStorage.setItem('userName', data.user?.name || '');
         navigate('/');
       } else {
         setError(data.message || 'Login failed');
