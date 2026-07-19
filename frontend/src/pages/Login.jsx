@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Mail, Lock, LogIn as LoginIcon, ArrowRight } from 'lucide-react';
+import { Mail, Lock, LogIn as LoginIcon, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -74,7 +75,26 @@ export default function Login() {
             <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', fontWeight: 500 }}>Password</label>
             <div style={{ position: 'relative' }}>
               <Lock size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-              <input type="password" name="password" value={formData.password} onChange={handleChange} required className="input-field" placeholder="••••••••" style={{ paddingLeft: '44px' }} />
+              <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} required className="input-field" placeholder="••••••••" style={{ paddingLeft: '44px', paddingRight: '44px' }} />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '16px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 
