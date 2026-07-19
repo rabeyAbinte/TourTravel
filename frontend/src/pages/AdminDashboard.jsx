@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, MapPin, Calendar, DollarSign, TrendingUp, Settings, Plus, Edit, Trash2, BarChart3, Package } from 'lucide-react';
+import { Users, MapPin, Calendar, DollarSign, TrendingUp, Settings, Plus, Edit, Trash2, BarChart3, Package, MessageSquare, CreditCard, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [users, setUsers] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
@@ -59,6 +60,19 @@ export default function AdminDashboard() {
         if (usersResponse.ok) {
           const usersData = await usersResponse.json();
           setUsers(usersData);
+        }
+
+        // Fetch reviews
+        const reviewsResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-auth-token': token
+          }
+        });
+
+        if (reviewsResponse.ok) {
+          const reviewsData = await reviewsResponse.json();
+          setReviews(reviewsData);
         }
 
         setLoading(false);
@@ -261,7 +275,7 @@ export default function AdminDashboard() {
             </div>
             <span className="text-teal-600 text-sm font-bold">+12.5%</span>
           </div>
-          <h3 className="text-3xl font-bold mb-1 text-neutral-900">${totalRevenue.toLocaleString()}</h3>
+          <h3 className="text-3xl font-bold mb-1 text-neutral-900">৳{totalRevenue.toLocaleString()}</h3>
           <p className="text-neutral-500 text-sm font-medium">Total Revenue</p>
         </div>
 
@@ -361,6 +375,36 @@ export default function AdminDashboard() {
         >
           <Users size={18} style={{ marginRight: '8px', display: 'inline' }} /> Users
         </button>
+        <button
+          onClick={() => setActiveTab('reviews')}
+          style={{
+            padding: '10px 20px',
+            borderRadius: 'var(--border-radius-sm)',
+            border: 'none',
+            background: activeTab === 'reviews' ? 'var(--primary)' : 'transparent',
+            color: activeTab === 'reviews' ? 'white' : 'var(--text-muted)',
+            cursor: 'pointer',
+            fontWeight: activeTab === 'reviews' ? 600 : 400,
+            transition: 'var(--transition)'
+          }}
+        >
+          <MessageSquare size={18} style={{ marginRight: '8px', display: 'inline' }} /> Reviews
+        </button>
+        <button
+          onClick={() => setActiveTab('payments')}
+          style={{
+            padding: '10px 20px',
+            borderRadius: 'var(--border-radius-sm)',
+            border: 'none',
+            background: activeTab === 'payments' ? 'var(--primary)' : 'transparent',
+            color: activeTab === 'payments' ? 'white' : 'var(--text-muted)',
+            cursor: 'pointer',
+            fontWeight: activeTab === 'payments' ? 600 : 400,
+            transition: 'var(--transition)'
+          }}
+        >
+          <CreditCard size={18} style={{ marginRight: '8px', display: 'inline' }} /> Payments
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -409,7 +453,7 @@ export default function AdminDashboard() {
                     <td style={{ padding: '12px' }}>
                       {new Date(booking.startDate).toLocaleDateString()} - {new Date(booking.endDate).toLocaleDateString()}
                     </td>
-                    <td style={{ padding: '12px' }}>${booking.totalPrice}</td>
+                    <td style={{ padding: '12px' }}>৳{booking.totalPrice?.toLocaleString() || 0}</td>
                     <td style={{ padding: '12px' }}>
                       <span 
                         onClick={() => handleUpdateBookingStatus(booking)}
@@ -474,6 +518,7 @@ export default function AdminDashboard() {
                 <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
                   <th style={{ padding: '12px' }}>Name</th>
                   <th style={{ padding: '12px' }}>Email</th>
+                  <th style={{ padding: '12px' }}>Phone</th>
                   <th style={{ padding: '12px' }}>Role</th>
                   <th style={{ padding: '12px' }}>Actions</th>
                 </tr>
@@ -483,6 +528,7 @@ export default function AdminDashboard() {
                   <tr key={user._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                     <td style={{ padding: '12px' }}>{user.name}</td>
                     <td style={{ padding: '12px' }}>{user.email}</td>
+                    <td style={{ padding: '12px' }}>{user.phone || 'N/A'}</td>
                     <td style={{ padding: '12px' }}>
                       <span style={{ padding: '4px 8px', borderRadius: '4px', background: user.role === 'admin' ? 'rgba(13, 148, 136, 0.1)' : 'rgba(59, 130, 246, 0.1)', color: user.role === 'admin' ? 'var(--primary)' : '#3b82f6', fontSize: '0.8rem', fontWeight: 600 }}>
                         {user.role || 'user'}
@@ -492,6 +538,94 @@ export default function AdminDashboard() {
                       <button onClick={() => handleEditUserRole(user)} style={{ padding: '6px 12px', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--border-color)', background: 'var(--surface)', cursor: 'pointer', fontSize: '0.85rem' }}>
                         Edit Role
                       </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'reviews' && (
+        <div className="bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm">
+          <h2 className="text-2xl font-bold text-neutral-900 mb-6">Reviews & Support</h2>
+          {reviews.length === 0 ? (
+            <p className="text-neutral-500">No reviews found.</p>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {reviews.map((review) => (
+                <div key={review._id} className="bg-neutral-50 p-6 rounded-2xl border border-neutral-100">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="font-bold text-neutral-900 mb-1">{review.user?.name || 'Anonymous User'}</h3>
+                      <p className="text-neutral-500 text-sm">{review.place?.name || 'Unknown Place'}</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-yellow-500">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i} className={i < Math.floor(review.rating) ? '★' : '☆'}>★</span>
+                      ))}
+                      <span className="text-neutral-600 text-sm ml-2">{review.rating}</span>
+                    </div>
+                  </div>
+                  <p className="text-neutral-700 mb-4">{review.comment}</p>
+                  <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-green-50 text-green-600 font-medium hover:bg-green-100 transition-colors">
+                      <CheckCircle size={16} /> Approve
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 text-red-600 font-medium hover:bg-red-100 transition-colors">
+                      <XCircle size={16} /> Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'payments' && (
+        <div className="bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm">
+          <h2 className="text-2xl font-bold text-neutral-900 mb-6">Payment & Accounts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="p-6 bg-teal-50 rounded-2xl border border-teal-100">
+              <div className="flex items-center gap-3 mb-4">
+                <CreditCard size={24} className="text-teal-600" />
+                <h3 className="font-bold text-neutral-900">Total Revenue</h3>
+              </div>
+              <p className="text-3xl font-bold text-teal-600">৳{totalRevenue.toLocaleString()}</p>
+            </div>
+            <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+              <div className="flex items-center gap-3 mb-4">
+                <Clock size={24} className="text-blue-600" />
+                <h3 className="font-bold text-neutral-900">Pending Refunds</h3>
+              </div>
+              <p className="text-3xl font-bold text-blue-600">0</p>
+            </div>
+          </div>
+          <h3 className="font-bold text-neutral-900 mb-4">Recent Transactions</h3>
+          {bookings.length === 0 ? (
+            <p className="text-neutral-500">No transactions found.</p>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                  <th style={{ padding: '12px' }}>User</th>
+                  <th style={{ padding: '12px' }}>Amount</th>
+                  <th style={{ padding: '12px' }}>Date</th>
+                  <th style={{ padding: '12px' }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((booking) => (
+                  <tr key={booking._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                    <td style={{ padding: '12px' }}>{booking.user?.name || 'Unknown'}</td>
+                    <td style={{ padding: '12px' }}>৳{booking.totalPrice?.toLocaleString() || 0}</td>
+                    <td style={{ padding: '12px' }}>{new Date(booking.createdAt).toLocaleDateString()}</td>
+                    <td style={{ padding: '12px' }}>
+                      <span style={{ padding: '4px 8px', borderRadius: '4px', background: booking.status === 'Confirmed' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(234, 179, 8, 0.1)', color: booking.status === 'Confirmed' ? '#22c55e' : '#eab308', fontSize: '0.8rem', fontWeight: 600 }}>
+                        {booking.status}
+                      </span>
                     </td>
                   </tr>
                 ))}
