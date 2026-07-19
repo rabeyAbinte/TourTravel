@@ -478,13 +478,10 @@ export default function DestinationDetails() {
                       value={userComment} 
                       onChange={(e) => setUserComment(e.target.value)} 
                       id="review-text"
-                      className="peer w-full min-h-[140px] p-5 pt-8 border border-neutral-300 rounded-lg text-neutral-700 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none transition-all bg-neutral-50/80 hover:bg-neutral-50" 
+                      className="w-full min-h-[140px] p-5 border border-neutral-300 rounded-lg text-neutral-700 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none transition-all bg-neutral-50/80 hover:bg-neutral-50" 
                       required 
-                      placeholder=" "
+                      placeholder="Tell us about your experience..."
                     />
-                    <label htmlFor="review-text" className="absolute left-5 top-5 text-neutral-400 text-base transition-all duration-200 peer-focus:text-xs peer-focus:top-2.5 peer-focus:text-teal-600 peer-focus:font-semibold peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:top-2.5 peer-[:not(:placeholder-shown)]:font-semibold cursor-text">
-                      Tell us about your experience...
-                    </label>
                   </div>
                   
                   <div className="flex items-center justify-between pt-2">
