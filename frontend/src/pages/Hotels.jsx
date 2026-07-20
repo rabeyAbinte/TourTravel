@@ -9,6 +9,7 @@ export default function Hotels() {
 
   const destinations = ['All', 'Cox\'s Bazar', 'Sylhet', 'Sajek', 'Bandarban', 'Saint Martin', 'Sundarban'];
 
+  const allHotels = [
     { name: "Ocean Paradise Hotel", destination: "Cox's Bazar", rating: 4.9, price: 5000, image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", features: ["Sea View", "Swimming Pool", "Spa"] },
     { name: "Sayeman Beach Resort", destination: "Cox's Bazar", rating: 4.8, price: 6500, image: "https://images.unsplash.com/photo-1582719478250-c89404bb8a0e?w=800&q=80", features: ["Private Beach", "Infinity Pool", "Buffet"] },
     { name: "Hotel The Cox Today", destination: "Cox's Bazar", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80", features: ["Free Breakfast", "Gym", "Sea View"] },
