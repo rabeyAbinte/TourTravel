@@ -71,6 +71,9 @@ export default function Navbar() {
               <Link to="/destinations" className={`nav-link ${location.pathname === '/destinations' ? 'active' : ''}`} style={{ color: textClass }}>
                 Browse
               </Link>
+              <Link to="/hotels" className={`nav-link ${location.pathname === '/hotels' ? 'active' : ''}`} style={{ color: textClass }}>
+                Hotels
+              </Link>
               <Link to="/guides" className={`nav-link ${location.pathname === '/guides' ? 'active' : ''}`} style={{ color: textClass }}>
                 Tour Guides
               </Link>
@@ -193,6 +196,13 @@ export default function Navbar() {
                   className={`block px-4 py-3 rounded-xl ${location.pathname === '/destinations' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
                 >
                   Browse
+                </Link>
+                <Link 
+                  to="/hotels" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-xl ${location.pathname === '/hotels' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
+                >
+                  Hotels
                 </Link>
                 <Link 
                   to="/guides" 

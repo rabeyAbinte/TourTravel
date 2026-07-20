@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Destinations from './pages/Destinations';
+import Hotels from './pages/Hotels';
 import DestinationDetails from './pages/DestinationDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/destinations" element={<Destinations />} />
+          <Route path="/hotels" element={<Hotels />} />
           <Route path="/destinations/:id" element={<DestinationDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
