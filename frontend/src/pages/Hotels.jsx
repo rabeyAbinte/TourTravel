@@ -9,25 +9,24 @@ export default function Hotels() {
 
   const destinations = ['All', 'Cox\'s Bazar', 'Sylhet', 'Sajek', 'Bandarban', 'Saint Martin', 'Sundarban'];
 
-  const allHotels = [
-    { name: "Ocean Paradise Hotel", destination: "Cox's Bazar", rating: 4.9, price: 5000, image: "https://images.unsplash.com/photo-1582719478250-c89404bb8a0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Sea View", "Swimming Pool", "Spa"] },
-    { name: "Sayeman Beach Resort", destination: "Cox's Bazar", rating: 4.8, price: 6500, image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Private Beach", "Infinity Pool", "Buffet"] },
-    { name: "Hotel The Cox Today", destination: "Cox's Bazar", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Free Breakfast", "Gym", "Sea View"] },
+    { name: "Ocean Paradise Hotel", destination: "Cox's Bazar", rating: 4.9, price: 5000, image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", features: ["Sea View", "Swimming Pool", "Spa"] },
+    { name: "Sayeman Beach Resort", destination: "Cox's Bazar", rating: 4.8, price: 6500, image: "https://images.unsplash.com/photo-1582719478250-c89404bb8a0e?w=800&q=80", features: ["Private Beach", "Infinity Pool", "Buffet"] },
+    { name: "Hotel The Cox Today", destination: "Cox's Bazar", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80", features: ["Free Breakfast", "Gym", "Sea View"] },
     
-    { name: "Grand Palace Hotel", destination: "Sylhet", rating: 4.7, price: 3500, image: "https://images.unsplash.com/photo-1551882547-ff40c0d5bf94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["City Center", "Free Breakfast"] },
-    { name: "Rose View Hotel", destination: "Sylhet", rating: 4.8, price: 4500, image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Luxury Rooms", "Swimming Pool"] },
+    { name: "Grand Palace Hotel", destination: "Sylhet", rating: 4.7, price: 3500, image: "https://images.unsplash.com/photo-1551882547-ff40c0d5bf94?w=800&q=80", features: ["City Center", "Free Breakfast"] },
+    { name: "Rose View Hotel", destination: "Sylhet", rating: 4.8, price: 4500, image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80", features: ["Luxury Rooms", "Swimming Pool"] },
     
-    { name: "Sajek Resort", destination: "Sajek", rating: 4.8, price: 2500, image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Valley View", "Breakfast Included"] },
-    { name: "Ruilui Resort", destination: "Sajek", rating: 4.5, price: 2000, image: "https://images.unsplash.com/photo-1542314831-c53cd3816002?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Mountain View", "Free WiFi"] },
+    { name: "Sajek Resort", destination: "Sajek", rating: 4.8, price: 2500, image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80", features: ["Valley View", "Breakfast Included"] },
+    { name: "Ruilui Resort", destination: "Sajek", rating: 4.5, price: 2000, image: "https://images.unsplash.com/photo-1549294413-26f195200c16?w=800&q=80", features: ["Mountain View", "Free WiFi"] },
     
-    { name: "Sairu Hill Resort", destination: "Bandarban", rating: 4.9, price: 8000, image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Hill View", "Infinity Pool", "Premium"] },
-    { name: "Venus Resort", destination: "Bandarban", rating: 4.5, price: 3000, image: "https://images.unsplash.com/photo-1618773928120-2c142c67b931?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Nature Walk", "Free WiFi"] },
+    { name: "Sairu Hill Resort", destination: "Bandarban", rating: 4.9, price: 8000, image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=800&q=80", features: ["Hill View", "Infinity Pool", "Premium"] },
+    { name: "Venus Resort", destination: "Bandarban", rating: 4.5, price: 3000, image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80", features: ["Nature Walk", "Free WiFi"] },
     
-    { name: "Blue Marine Resort", destination: "Saint Martin", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Beachfront", "Seafood"] },
-    { name: "Coral View Resort", destination: "Saint Martin", rating: 4.5, price: 3500, image: "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Ocean View", "Balcony"] },
+    { name: "Blue Marine Resort", destination: "Saint Martin", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80", features: ["Beachfront", "Seafood"] },
+    { name: "Coral View Resort", destination: "Saint Martin", rating: 4.5, price: 3500, image: "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?w=800&q=80", features: ["Ocean View", "Balcony"] },
     
-    { name: "Sundarban Eco Resort", destination: "Sundarban", rating: 4.7, price: 5000, image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Eco-friendly", "Guided Tours"] },
-    { name: "Mangrove Hotel", destination: "Sundarban", rating: 4.4, price: 2500, image: "https://images.unsplash.com/photo-1542314831-c53cd3816002?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", features: ["Forest View", "Restaurant"] }
+    { name: "Sundarban Eco Resort", destination: "Sundarban", rating: 4.7, price: 5000, image: "https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=800&q=80", features: ["Eco-friendly", "Guided Tours"] },
+    { name: "Mangrove Hotel", destination: "Sundarban", rating: 4.4, price: 2500, image: "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&q=80", features: ["Forest View", "Restaurant"] }
   ];
 
   const handleBook = (hotel) => {
