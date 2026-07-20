@@ -7,6 +7,11 @@ import Destinations from './pages/Destinations';
 import DestinationDetails from './pages/DestinationDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import EmailSentConfirmation from './pages/EmailSentConfirmation';
+import ResetPassword from './pages/ResetPassword';
+import PasswordResetSuccess from './pages/PasswordResetSuccess';
+import InvalidToken from './pages/InvalidToken';
 import Itinerary from './pages/Itinerary';
 import MyBookings from './pages/MyBookings';
 import TourGuides from './pages/TourGuides';
@@ -30,6 +35,11 @@ function App() {
           <Route path="/destinations/:id" element={<DestinationDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/email-sent" element={<EmailSentConfirmation />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/password-reset-success" element={<PasswordResetSuccess />} />
+          <Route path="/invalid-token" element={<InvalidToken />} />
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/bookings" element={<MyBookings />} />
           <Route path="/guides" element={<TourGuides />} />

@@ -102,6 +102,12 @@ export default function Login() {
             </div>
           </div>
 
+          <div style={{ textAlign: 'right', marginTop: '8px' }}>
+            <Link to="/forgot-password" style={{ color: 'var(--primary)', fontSize: '0.9rem', textDecoration: 'none', fontWeight: 500 }}>
+              Forgot Password?
+            </Link>
+          </div>
+
           <button type="submit" className="btn btn-primary" style={{ marginTop: '16px', justifyContent: 'center', padding: '14px' }}>
             <LoginIcon size={20} />
             Log In

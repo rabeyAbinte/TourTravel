@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, getProfile, updateProfile, getAllUsers, updateUserRole, toggleBanUser } from '../controllers/authController.js';
+import { register, login, getProfile, updateProfile, getAllUsers, updateUserRole, toggleBanUser, forgotPassword, resetPassword } from '../controllers/authController.js';
 import { authMiddleware, adminMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -38,5 +38,15 @@ router.put("/users/:id/role", authMiddleware, adminMiddleware, updateUserRole);
 // @desc    Toggle user ban status (Admin only)
 // @access  Private/Admin
 router.put("/users/:id/ban", authMiddleware, adminMiddleware, toggleBanUser);
+
+// @route   POST /api/auth/forgot-password
+// @desc    Send password reset link
+// @access  Public
+router.post("/forgot-password", forgotPassword);
+
+// @route   POST /api/auth/reset-password
+// @desc    Reset password with token
+// @access  Public
+router.post("/reset-password", resetPassword);
 
 export default router;
