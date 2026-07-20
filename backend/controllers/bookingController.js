@@ -16,6 +16,7 @@ export const createBooking = async (req, res) => {
       startDate,
       endDate,
       totalPrice,
+      paymentMethod: req.body.paymentMethod || 'Card',
       status: 'Confirmed'
     });
     const savedBooking = await newBooking.save();
@@ -74,5 +75,38 @@ export const deleteBooking = async (req, res) => {
     res.status(200).json({ message: 'Booking deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: "Failed to delete booking", error: err.message });
+  }
+};
+
+export const requestRefund = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    
+    // Ensure the booking belongs to the user
+    const userId = req.user?._id || req.user?.id;
+    if (booking.user.toString() !== userId.toString()) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    booking.refundRequested = true;
+    await booking.save();
+    res.status(200).json({ message: "Refund requested successfully", booking });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to request refund", error: err.message });
+  }
+};
+
+export const processRefund = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+
+    booking.refundRequested = false;
+    booking.status = 'Cancelled';
+    await booking.save();
+    res.status(200).json({ message: "Refund processed successfully", booking });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to process refund", error: err.message });
   }
 };

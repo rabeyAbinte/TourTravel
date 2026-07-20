@@ -50,7 +50,7 @@ export const getReviewsByPlace = async (req, res) => {
       }
     }
 
-    const reviews = await Review.find({ place: targetPlaceId }).populate('user', 'name').sort({ createdAt: -1 });
+    const reviews = await Review.find({ place: targetPlaceId, status: 'approved' }).populate('user', 'name').sort({ createdAt: -1 });
     res.status(200).json(reviews);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch reviews", error: err.message });
@@ -67,5 +67,29 @@ export const getReviewsByUser = async (req, res) => {
   } catch (err) {
     console.error('Error fetching user reviews:', err);
     res.status(500).json({ message: "Failed to fetch user reviews", error: err.message });
+  }
+};
+
+export const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find().populate('user', 'name').populate('place', 'name').sort({ createdAt: -1 });
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch reviews", error: err.message });
+  }
+};
+
+export const updateReviewStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const review = await Review.findById(req.params.id);
+    if (!review) return res.status(404).json({ message: "Review not found" });
+
+    review.status = status;
+    const updatedReview = await review.save();
+    const populated = await Review.findById(updatedReview._id).populate('user', 'name').populate('place', 'name');
+    res.json(populated);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update review", error: err.message });
   }
 };

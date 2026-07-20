@@ -27,6 +27,15 @@ const PlaceSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true
+  },
+  category: {
+    type: String,
+    enum: ['International', 'Domestic', 'Honeymoon', 'Adventure'],
+    default: 'Domestic'
+  },
+  seatLimit: {
+    type: Number,
+    default: 20
   }
 }, { timestamps: true });
 

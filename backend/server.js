@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import { authMiddleware, adminMiddleware } from './middleware/authMiddleware.js';
 
 import authRoutes from './routes/auth.js';
 import placeRoutes from './routes/places.js';
@@ -52,6 +53,16 @@ app.post("/api/contact", async (req, res) => {
     const newContact = new Contact(req.body);
     await newContact.save();
     res.status(201).json({ success: true, message: "Contact message saved successfully!" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Get all contacts (Admin only)
+app.get("/api/contact", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 });
+    res.status(200).json(contacts);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

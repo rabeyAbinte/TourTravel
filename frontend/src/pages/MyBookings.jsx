@@ -125,7 +125,7 @@ export default function MyBookings() {
                           </div>
                         </td>
                         <td style={{ padding: '18px 24px', fontWeight: 700, color: 'var(--primary)', fontSize: '1.05rem' }}>
-                          ${booking.totalPrice}
+                          ৳{booking.totalPrice}
                         </td>
                         <td style={{ padding: '18px 24px' }}>
                           {(() => {

@@ -26,7 +26,11 @@ export default function Login() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userRole', data.user?.role || 'user');
         localStorage.setItem('userName', data.user?.name || '');
-        navigate('/');
+        if (data.user?.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } else {
         setError(data.message || 'Login failed');
       }

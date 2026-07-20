@@ -140,7 +140,7 @@ export default function DestinationDetails() {
             reviewsCount: Math.floor(Math.random() * 200) + 50,
             visitors: Math.floor(Math.random() * 5000) + 1000,
             duration: place.duration || '3 Days, 2 Nights',
-            price: 100,
+            price: 1000,
             availableSeats: Math.floor(Math.random() * 20) + 2,
             image: mainImage,
             gallery: galleryImages,
@@ -325,7 +325,7 @@ export default function DestinationDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-white pb-20 font-sans text-neutral-800 selection:bg-teal-200 overflow-visible">
+    <div className="min-h-screen bg-white pb-20 font-sans text-neutral-800 selection:bg-teal-200 overflow-visible" style={{ paddingTop: '140px' }}>
       
       {/* Simple Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4">
@@ -341,7 +341,7 @@ export default function DestinationDetails() {
         
         {/* HERO TITLE SECTION */}
         <div className="mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black tracking-tight mb-6 leading-normal">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1A1A1A] tracking-tight mb-6 leading-normal">
             {destination.title}
           </h1>
         </div>
@@ -517,7 +517,7 @@ export default function DestinationDetails() {
             <div className="sticky top-32 bg-white p-8 rounded-3xl border border-neutral-100 shadow-xl shadow-slate-200/60 backdrop-blur-sm">
               <div className="mb-6 pb-6 border-b border-neutral-100/80">
                 <div className="flex items-end gap-2 mb-2">
-                  <span className="text-3xl font-bold text-neutral-900">${destination.price}</span>
+                  <span className="text-3xl font-bold text-neutral-900">৳{destination.price}</span>
                   <span className="text-neutral-500 mb-1">/ person</span>
                 </div>
                 <div className="flex items-center gap-1 text-sm font-medium">
@@ -568,12 +568,12 @@ export default function DestinationDetails() {
               {startDate && endDate && (
                 <div className="space-y-3 mb-6 pb-6 border-b border-neutral-100">
                   <div className="flex justify-between text-neutral-600">
-                    <span>${destination.price} × {guests} {guests===1?'guest':'guests'}</span>
-                    <span>${destination.price * guests}</span>
+                    <span>৳{destination.price} × {calculateDays()} {calculateDays()===1?'day':'days'} × {guests} {guests===1?'guest':'guests'}</span>
+                    <span>৳{destination.price * calculateDays() * guests}</span>
                   </div>
                   <div className="flex justify-between text-neutral-600">
                     <span>Service Fee</span>
-                    <span>$20</span>
+                    <span>৳20</span>
                   </div>
                 </div>
               )}
@@ -581,7 +581,7 @@ export default function DestinationDetails() {
               <div className="flex justify-between items-center mb-6">
                 <span className="text-lg font-semibold text-neutral-900">Total</span>
                 <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-teal-500 bg-clip-text text-transparent">
-                  ${startDate && endDate ? (destination.price * guests) + 20 : destination.price + 20}
+                  ৳{startDate && endDate ? (destination.price * calculateDays() * guests) + 20 : destination.price + 20}
                 </span>
               </div>
 
@@ -683,7 +683,7 @@ export default function DestinationDetails() {
                 <div className="mb-6">
                   <p className="text-neutral-400 text-xs font-light uppercase tracking-widest mb-2">Price</p>
                   <div className="flex items-end gap-2">
-                    <span className="text-3xl font-light text-neutral-900">${destination.price}</span>
+                    <span className="text-3xl font-light text-neutral-900">৳{destination.price}</span>
                     <span className="text-neutral-500 mb-1 font-light">/ person</span>
                   </div>
                 </div>
@@ -726,16 +726,16 @@ export default function DestinationDetails() {
                 {startDate && endDate && (
                   <div className="bg-neutral-50 rounded-xl p-4 mb-6">
                     <div className="flex justify-between text-sm text-neutral-600 font-light mb-2">
-                      <span>${destination.price} × {guests} {guests===1?'guest':'guests'}</span>
-                      <span className="font-light text-neutral-900">${destination.price * guests}</span>
+                      <span>৳{destination.price} × {calculateDays()} {calculateDays()===1?'day':'days'} × {guests} {guests===1?'guest':'guests'}</span>
+                      <span className="font-light text-neutral-900">৳{destination.price * calculateDays() * guests}</span>
                     </div>
                     <div className="flex justify-between text-sm text-neutral-600 font-light mb-2">
                       <span>Service Fee</span>
-                      <span className="font-light text-neutral-900">$20</span>
+                      <span className="font-light text-neutral-900">৳20</span>
                     </div>
                     <div className="pt-2 border-t border-neutral-200 flex justify-between items-center">
                       <span className="font-light text-neutral-900">Total</span>
-                      <span className="text-xl font-light text-teal-600">${(destination.price * guests) + 20}</span>
+                      <span className="text-xl font-light text-teal-600">৳{(destination.price * calculateDays() * guests) + 20}</span>
                     </div>
                   </div>
                 )}

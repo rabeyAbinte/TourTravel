@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
@@ -17,9 +17,12 @@ import UserProfile from './pages/UserProfile';
 import './App.css';
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
     <div className="app-layout">
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

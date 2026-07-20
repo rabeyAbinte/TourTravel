@@ -82,7 +82,7 @@ export default function DestinationCard({ destination }) {
 
   return (
     <>
-      <div className="relative min-h-[460px] w-full bg-slate-900 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group flex flex-col justify-end border border-slate-100/10">
+      <div className="relative min-h-[460px] w-full bg-slate-900 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group block border border-slate-100/10">
         <img
           src={localImage}
           alt={displayTitle}
@@ -94,9 +94,9 @@ export default function DestinationCard({ destination }) {
           {Number(ratingVal).toFixed(1)}
         </div>
 
-        {/* সেফ প্যাডিং pb-8 যুক্ত করা হলো কন্টেন্ট ভেসে থাকার জন্য */}
-        <div className="p-6 pb-8 relative z-10 flex flex-col w-full h-full justify-end">
-          <div className="mt-auto w-full">
+        {/* Text content positioned at the bottom */}
+        <div className="absolute bottom-0 left-0 w-full p-6 pb-8 z-10">
+          <div className="w-full">
             <h3 className="text-2xl font-bold text-white mb-2 line-clamp-1 group-hover:text-teal-400 transition-colors drop-shadow-md">
               {displayTitle}
             </h3>

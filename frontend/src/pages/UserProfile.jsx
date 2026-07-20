@@ -385,7 +385,7 @@ export default function UserProfile() {
                           </div>
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                          <p style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '1.1rem' }}>${booking.totalPrice}</p>
+                          <p style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '1.1rem' }}>৳{booking.totalPrice}</p>
                           <span style={{ fontSize: '0.85rem', color: '#059669', fontWeight: 600 }}>{booking.status || 'Confirmed'}</span>
                         </div>
                       </div>

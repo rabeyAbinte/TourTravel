@@ -59,6 +59,10 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    if (user.isBanned) {
+      return res.status(403).json({ message: "Your account has been banned. Please contact support." });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -157,6 +161,31 @@ export const updateUserRole = async (req, res) => {
     await user.save();
 
     res.json({ ...user.toObject(), password: undefined });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Server error: " + err.message });
+  }
+};
+
+// @desc    Toggle user ban status (Admin only)
+// @route   PUT /api/auth/users/:id/ban
+// @access  Private/Admin
+export const toggleBanUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    if (user.role === 'admin') {
+      return res.status(400).json({ message: "Cannot ban an admin user" });
+    }
+
+    user.isBanned = !user.isBanned;
+    await user.save();
+
+    res.json({ ...user.toObject(), password: undefined, message: user.isBanned ? "User banned" : "User unbanned" });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server error: " + err.message });

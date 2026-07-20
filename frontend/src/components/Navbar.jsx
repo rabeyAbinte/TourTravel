@@ -63,18 +63,22 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="nav-links hidden md:flex items-center gap-1">
-          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} style={{ color: textClass }}>
-            Home
-          </Link>
-          <Link to="/destinations" className={`nav-link ${location.pathname === '/destinations' ? 'active' : ''}`} style={{ color: textClass }}>
-            Browse
-          </Link>
-          <Link to="/guides" className={`nav-link ${location.pathname === '/guides' ? 'active' : ''}`} style={{ color: textClass }}>
-            Tour Guides
-          </Link>
-          <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} style={{ color: textClass }}>
-            Contact Us
-          </Link>
+          {!location.pathname.startsWith('/admin') && (
+            <>
+              <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} style={{ color: textClass }}>
+                Home
+              </Link>
+              <Link to="/destinations" className={`nav-link ${location.pathname === '/destinations' ? 'active' : ''}`} style={{ color: textClass }}>
+                Browse
+              </Link>
+              <Link to="/guides" className={`nav-link ${location.pathname === '/guides' ? 'active' : ''}`} style={{ color: textClass }}>
+                Tour Guides
+              </Link>
+              <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} style={{ color: textClass }}>
+                Contact Us
+              </Link>
+            </>
+          )}
           
           {isAuthenticated ? (
             <div className="relative ml-4" ref={dropdownRef}>
@@ -95,22 +99,26 @@ export default function Navbar() {
                     <p className="text-xs text-neutral-500 capitalize">{userRole}</p>
                   </div>
                   <div className="p-2">
-                    <Link 
-                      to="/itinerary" 
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100 transition-colors"
-                    >
-                      <Calendar size={18} />
-                      <span className="font-medium">My Itineraries</span>
-                    </Link>
-                    <Link 
-                      to="/bookings" 
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100 transition-colors"
-                    >
-                      <BookmarkCheck size={18} />
-                      <span className="font-medium">My Bookings</span>
-                    </Link>
+                    {userRole !== 'admin' && (
+                      <>
+                        <Link 
+                          to="/itinerary" 
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100 transition-colors"
+                        >
+                          <Calendar size={18} />
+                          <span className="font-medium">My Itineraries</span>
+                        </Link>
+                        <Link 
+                          to="/bookings" 
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100 transition-colors"
+                        >
+                          <BookmarkCheck size={18} />
+                          <span className="font-medium">My Bookings</span>
+                        </Link>
+                      </>
+                    )}
                     <Link 
                       to="/profile" 
                       onClick={() => setDropdownOpen(false)}
@@ -170,55 +178,63 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t border-neutral-100 z-50">
           <div className="container py-4 space-y-2">
-            <Link 
-              to="/" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded-xl ${location.pathname === '/' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/destinations" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded-xl ${location.pathname === '/destinations' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Browse
-            </Link>
-            <Link 
-              to="/guides" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded-xl ${location.pathname === '/guides' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Tour Guides
-            </Link>
-            <Link 
-              to="/contact" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded-xl ${location.pathname === '/contact' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Contact Us
-            </Link>
+            {!location.pathname.startsWith('/admin') && (
+              <>
+                <Link 
+                  to="/" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-xl ${location.pathname === '/' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
+                >
+                  Home
+                </Link>
+                <Link 
+                  to="/destinations" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-xl ${location.pathname === '/destinations' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
+                >
+                  Browse
+                </Link>
+                <Link 
+                  to="/guides" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-xl ${location.pathname === '/guides' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
+                >
+                  Tour Guides
+                </Link>
+                <Link 
+                  to="/contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 rounded-xl ${location.pathname === '/contact' ? 'bg-teal-50 text-teal-700' : 'text-neutral-700 hover:bg-neutral-100'}`}
+                >
+                  Contact Us
+                </Link>
+              </>
+            )}
             
             {isAuthenticated ? (
               <>
                 <div className="border-t border-neutral-100 pt-2 mt-2">
                   <p className="px-4 py-2 text-sm font-semibold text-neutral-900">{userName}</p>
-                  <Link 
-                    to="/itinerary" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100"
-                  >
-                    <Calendar size={18} />
-                    My Itineraries
-                  </Link>
-                  <Link 
-                    to="/bookings" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100"
-                  >
-                    <BookmarkCheck size={18} />
-                    My Bookings
-                  </Link>
+                  {userRole !== 'admin' && (
+                    <>
+                      <Link 
+                        to="/itinerary" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100"
+                      >
+                        <Calendar size={18} />
+                        My Itineraries
+                      </Link>
+                      <Link 
+                        to="/bookings" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-100"
+                      >
+                        <BookmarkCheck size={18} />
+                        My Bookings
+                      </Link>
+                    </>
+                  )}
                   <Link 
                     to="/profile" 
                     onClick={() => setMobileMenuOpen(false)}
