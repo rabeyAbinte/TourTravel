@@ -18,10 +18,10 @@ export default function Hotels() {
 
   const allHotels = [
     { name: "Ocean Paradise Hotel", destination: "Cox's Bazar", rating: 4.9, price: 5000, image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", features: ["Sea View", "Swimming Pool", "Spa"] },
-    { name: "Sayeman Beach Resort", destination: "Cox's Bazar", rating: 4.8, price: 6500, image: "https://images.unsplash.com/photo-1582719478250-c89404bb8a0e?w=800&q=80", features: ["Private Beach", "Infinity Pool", "Buffet"] },
+    { name: "Sayeman Beach Resort", destination: "Cox's Bazar", rating: 4.8, price: 6500, image: "/images/coxbazar2.jpg", features: ["Private Beach", "Infinity Pool", "Buffet"] },
     { name: "Hotel The Cox Today", destination: "Cox's Bazar", rating: 4.6, price: 4000, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80", features: ["Free Breakfast", "Gym", "Sea View"] },
     
-    { name: "Grand Palace Hotel", destination: "Sylhet", rating: 4.7, price: 3500, image: "https://images.unsplash.com/photo-1551882547-ff40c0d5bf94?w=800&q=80", features: ["City Center", "Free Breakfast"] },
+    { name: "Grand Palace Hotel", destination: "Sylhet", rating: 4.7, price: 3500, image: "/images/sylhet 1.jpg", features: ["City Center", "Free Breakfast"] },
     { name: "Rose View Hotel", destination: "Sylhet", rating: 4.8, price: 4500, image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80", features: ["Luxury Rooms", "Swimming Pool"] },
     
     { name: "Sajek Resort", destination: "Sajek", rating: 4.8, price: 2500, image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80", features: ["Valley View", "Breakfast Included"] },
@@ -189,24 +189,22 @@ export default function Hotels() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Check-in Date</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                     <input 
                       type="date" 
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
                     />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Check-out Date</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                     <input 
                       type="date" 
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
                     />
                   </div>
                 </div>
