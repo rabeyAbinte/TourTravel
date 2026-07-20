@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { MapPin, Star, Wifi, Coffee, Waves, Plane, Map as MapIcon, ChevronRight } from 'lucide-react';
+import { MapPin, Star, Wifi, Coffee, Waves, Plane, Map as MapIcon, ChevronRight, X, Calendar, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 export default function Hotels() {
   const [selectedDestination, setSelectedDestination] = useState('All');
   const navigate = useNavigate();
+
+  // Booking Modal States
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [guests, setGuests] = useState(1);
 
   const destinations = ['All', 'Cox\'s Bazar', 'Sylhet', 'Sajek', 'Bandarban', 'Saint Martin', 'Sundarban'];
 
@@ -37,8 +44,22 @@ export default function Hotels() {
       navigate('/login');
       return;
     }
+    setSelectedHotel(hotel);
+    setShowBookingModal(true);
+  };
+
+  const confirmBooking = () => {
+    if (!startDate || !endDate) {
+      alert("Please select both start and end dates.");
+      return;
+    }
     // Mock booking success
-    alert(`🎉 Booking Confirmed for ${hotel.name}! We will contact you soon.`);
+    alert(`🎉 Booking Confirmed for ${selectedHotel.name}! We will contact you soon.`);
+    setShowBookingModal(false);
+    setSelectedHotel(null);
+    setStartDate('');
+    setEndDate('');
+    setGuests(1);
   };
 
   const filteredHotels = selectedDestination === 'All' 
@@ -140,6 +161,86 @@ export default function Hotels() {
         )}
 
       </div>
+
+      {/* Booking Modal */}
+      {showBookingModal && selectedHotel && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl"
+          >
+            <div className="relative h-48">
+              <img src={selectedHotel.image} alt={selectedHotel.name} className="w-full h-full object-cover" />
+              <button 
+                onClick={() => setShowBookingModal(false)}
+                className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">Book {selectedHotel.name}</h3>
+              <p className="text-slate-500 flex items-center gap-1 text-sm mb-6">
+                <MapPin size={14} /> {selectedHotel.destination}
+              </p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Check-in Date</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input 
+                      type="date" 
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Check-out Date</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input 
+                      type="date" 
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Guests</label>
+                  <div className="relative">
+                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input 
+                      type="number" 
+                      min="1"
+                      value={guests}
+                      onChange={(e) => setGuests(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-slate-500">Total Price</p>
+                  <p className="text-2xl font-bold text-teal-600">৳{selectedHotel.price} <span className="text-sm font-normal text-slate-500">/ night</span></p>
+                </div>
+                <button 
+                  onClick={confirmBooking}
+                  className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition shadow-lg shadow-teal-600/30"
+                >
+                  Confirm Booking
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
